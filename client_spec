@@ -1,0 +1,21 @@
+0. なんぞこれ
+Twitterクライアントです．ターミナルからなんですけど
+プログラミングしたり，コンパイルしながらつぶやきゃいいなと思って作りました．
+
+1. どんな動き
+アプリの連携
+↓
+コマンドを使って
+	TLをみる     tweet timeline/tl ("user")
+	ついーとする tweet (tw) "status"
+	リプライする tweet reply/rp "status_id/@user" "status"
+	DMを送る     tweet directmail/dm "@user" "status"
+	リツイートする（公式retweet，非公式retweetは検討中）
+							 tweet retweet/rt "status_id"
+
+	間違っちまったら使い方(Usage)を表示する
+
+2. 検討中
+	demon化する
+		↑
+		Twitter.configure周り
