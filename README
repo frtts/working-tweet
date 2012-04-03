@@ -1,9 +1,10 @@
 これはターミナルからコマンドでツイート出来るクライアントです。
 
 実行環境
-Ruby 1.8
-RubyGems 1.8.6
-	twitter
-	oauth
+Ruby 1.9
+RubyGems 1.8.13
+  twitter
+  oauth
+  yaml
 
 

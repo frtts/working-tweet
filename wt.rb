@@ -1,29 +1,43 @@
-require 'rubygems'
+# -*- coding: utf-8 -*-
 require 'oauth'
 require 'twitter'
+require 'yaml'
+
+#$KCODE = 'UTF8' if RUBY_VERSION < '1.9'
 
 CONSUMERKEY = "EkZzmg9e1urB2pdMusxuQ"
 CONSUMERSECRET = "LbYynipCQq8nXoU0yzWhoIgQl6ykr2zjufoe4PkKAc"
 
-consumer = OAuth::Consumer.new(CONSUMERKEY, CONSUMERSECRET, :site => "http://api.twitter.com")
-
-oauth_verifier = "6475586"
-access_token = consumer.get_access_token
-access_tok = access_token.token
-access_secret = access_token.secret
-
-#access_tok = "20989679-vRVegGOaP6sTC1C8oLdZG4vwDI3xvTYk79rHd6Km9"
-#access_secret = "irhW5hVeuXMkhdYlPaE6DrsYi0fu3lUM8w6cNMaGg"
+if !File.file?('wktw_acc_tok.yml')
+  consumer = OAuth::Consumer.new(CONSUMERKEY, CONSUMERSECRET, :site => "http://twitter.com")
+  request_token = consumer.get_request_token
+  puts 'Please go to web site below URL'
+  puts '=> #{request_token.authorize_url}'
+  
+  print "input PIN: "
+  oauth_verifier = STDIN.gets
+  oauth_verifier.chomp!
+  access_token = request_token.get_access_token(:oauth_verifier => oauth_verifier)
+  token = access_token.token
+  secret = access_token.secret
+  acc_token = {'AccessToken' => token, 'AccessTokenSecret' => secret}
+  YAML.dump({'AccessToken' => token, 'AccessTokenSecret' => secret}, File.open('wktw_acc_tok.yml', 'w'))
+else
+  acc_token = YAML.load(File.open('wktw_acc_tok.yml', 'r'))
+end
 
 Twitter.configure do |config|
 	config.consumer_key = CONSUMERKEY
 	config.consumer_secret = CONSUMERSECRET
-	config.oauth_token = access_tok
-	config.oauth_token_secret = access_secret
+	config.oauth_token = acc_token['AccessToken']
+	config.oauth_token_secret = acc_token['AccessTokenSecret']
 end
 
-$KCONF = "UTF-8"
-command = ARGV.shift.chomp
+if (command = ARGV[0].dup) == nil
+  STDERR.puts "USAGE:\n$ ruby wt.rb hoge"
+  exit 
+end
+command.chomp!
 if (command == "timeline" or command == "tl")
 	#puts "status id\t\tscreen name\ttweet"
 	if (ARGV.shift != nil)
