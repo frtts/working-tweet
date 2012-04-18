@@ -33,14 +33,17 @@ Twitter.configure do |config|
 	config.oauth_token_secret = acc_token['AccessTokenSecret']
 end
 
-if (command = ARGV[0].dup) == nil
-  STDERR.puts "USAGE:\n$ ruby wt.rb hoge"
-  exit 
+# when argument is nothing
+#   exit this program
+if ARGV[0] == nil
+  STDERR.puts "USAGE:\n$ ruby wt.rb tw hoge"
+  exit
 end
-command.chomp!
-if (command == "timeline" or command == "tl")
+
+if (ARGV[0] == "timeline" or ARGV[0] == "tl")
+  # Show timeline
 	#puts "status id\t\tscreen name\ttweet"
-	if (ARGV.shift != nil)
+	if (ARGV[1] != nil)
 		Twitter.home_timeline.each do |tl|
 			puts "%s\t%s\t%s"%[tl.id, tl.user.screen_name, tl.text]
 		end
@@ -49,11 +52,18 @@ if (command == "timeline" or command == "tl")
 			puts "%s\t%s\t%s"%[tl.id, tl.user.screen_name, tl.text]
 		end
 	end
-elsif (command == "tw")
-	Twitter.update(ARGV.shift.chomp)
-elsif (command == "retweet" or command == "rt")
-	Twitter.retweet(ARGV.shift.chomp)
+elsif (ARGV[0] == "tw")
+  # Tweet
+	Twitter.update(ARGV[1].chomp)
+elsif (ARGV[0] == "retweet" or ARGV[0] == "rt")
+  # Retweet
+	Twitter.retweet(ARGV[1].chomp.to_i)
+elsif (ARGV[0] == "favorite" or ARGV[0] == "fav")
+  # Favorite
+	Twitter.favorite(ARGV[1].chomp.to_i)
 else
-	Twitter.update(command)
+  # No commands ...
+  STDERR.puts "USAGE:\n$ ruby wt.rb tw hoge"
+  #puts "Usage:\nruby wt.rb COMMAND ARG"
 end
 
