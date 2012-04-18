@@ -43,7 +43,7 @@ end
 if (ARGV[0] == "timeline" or ARGV[0] == "tl")
   # Show timeline
 	#puts "status id\t\tscreen name\ttweet"
-	if (ARGV[1] != nil)
+	if (ARGV[1] == nil)
 		Twitter.home_timeline.each do |tl|
 			puts "%s\t%s\t%s"%[tl.id, tl.user.screen_name, tl.text]
 		end
@@ -55,12 +55,15 @@ if (ARGV[0] == "timeline" or ARGV[0] == "tl")
 elsif (ARGV[0] == "tw")
   # Tweet
 	Twitter.update(ARGV[1].chomp)
+  puts "Success tweet!"
 elsif (ARGV[0] == "retweet" or ARGV[0] == "rt")
   # Retweet
 	Twitter.retweet(ARGV[1].chomp.to_i)
+  puts "Success Retweet!"
 elsif (ARGV[0] == "favorite" or ARGV[0] == "fav")
   # Favorite
 	Twitter.favorite(ARGV[1].chomp.to_i)
+  puts "Success Favorite!"
 else
   # No commands ...
   STDERR.puts "USAGE:\n$ ruby wt.rb tw hoge"
