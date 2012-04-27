@@ -5,8 +5,8 @@ require 'yaml'
 
 #$KCODE = 'UTF8' if RUBY_VERSION < '1.9'
 
-CONSUMERKEY = "EkZzmg9e1urB2pdMusxuQ"
-CONSUMERSECRET = "LbYynipCQq8nXoU0yzWhoIgQl6ykr2zjufoe4PkKAc"
+CONSUMERKEY = "xxxxxxxxxxxxxxxxxx"
+CONSUMERSECRET = "xxxxxxxxxxxxxxxxxxxxx"
 
 if !File.file?('wktw_acc_tok.yml')
   consumer = OAuth::Consumer.new(CONSUMERKEY, CONSUMERSECRET, :site => "http://twitter.com")
