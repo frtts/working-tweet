@@ -5,15 +5,16 @@ require 'yaml'
 
 #$KCODE = 'UTF8' if RUBY_VERSION < '1.9'
 
-CONSUMERKEY = "xxxxxxxxxxxxxxxxxx"
-CONSUMERSECRET = "xxxxxxxxxxxxxxxxxxxxx"
+CONSUMERKEY = "xxxxxxxxxxxxxxxxxxxx"
+CONSUMERSECRET = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 if !File.file?('wktw_acc_tok.yml')
+  # setup authorize
   consumer = OAuth::Consumer.new(CONSUMERKEY, CONSUMERSECRET, :site => "http://twitter.com")
   request_token = consumer.get_request_token
   puts 'Please go to web site below URL'
   puts '=> #{request_token.authorize_url}'
-  
+ 
   print "input PIN: "
   oauth_verifier = STDIN.gets
   oauth_verifier.chomp!
